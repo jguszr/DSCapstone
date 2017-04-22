@@ -16,7 +16,7 @@ getallData <- function() {
     message("Source file already exists  ", coreDataFile, source)
   }
   message("unziping")
-  unzip(zipfile = coreDataFile, exdir = dataPath, , overwrite = TRUE)
+  unzip(zipfile = coreDataFile, exdir = dataPath, overwrite = TRUE)
   
 }
 
@@ -29,9 +29,9 @@ prepareLocalPath <- function() {
   }
 }
 
-
 doItAll <- function() {
   prepareLocalPath()
   getallData()
+  
 }
   
