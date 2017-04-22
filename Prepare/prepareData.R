@@ -7,11 +7,16 @@ dataPath <- "./data"
 coreDataFile <- file.path(dataPath,"swiftkey.zip")
 source <- "https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"
 
+## Check if the data is alreadyDownloaded, if isn't it get it done !
 getallData <- function() {
   if(!file.exists(coreDataFile)) {
     message("Downloading data file ", coreDataFile, source)
     download.file(source, file.path(coreDataFile))  
-  } 
+  } else {
+    message("Source file already exists  ", coreDataFile, source)
+  }
+  message("unziping")
+  unzip(zipfile = coreDataFile, exdir = dataPath, , overwrite = TRUE)
   
 }
 
@@ -22,5 +27,11 @@ prepareLocalPath <- function() {
   if(!file.exists(dataPath)) {
     dir.create(dataPath)
   }
+}
+
+
+doItAll <- function() {
+  prepareLocalPath()
+  getallData()
 }
   
