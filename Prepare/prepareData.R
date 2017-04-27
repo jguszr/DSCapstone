@@ -5,7 +5,7 @@
 
 dataPath <- "./data"
 shortFiles <- "./data/short/"
-sampleSize <- 1000000
+sampleSize <- 100000
 
 coreDataFile <- file.path(dataPath,"swiftkey.zip")
 source <- "https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"
