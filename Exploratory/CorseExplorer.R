@@ -34,12 +34,14 @@ findFreqTerms(dtm, 5)
 #find associated terms.
 findAssocs(dtm,"kultur", 0.8)
 
-dtmRtext <- create_matrix(corps_DE[[2]],language = "de",
-                          ngramLength = 2,
-                          originalMatrix = dtm,
+#works but it is slow
+dtmRtext <- create_matrix(corps_DE,language = "de",
+                          ngramLength = 3,
                           removeNumbers = TRUE,
-                          removePunctuation = TRUE)
+                          removePunctuation = TRUE,
+                          removeSparseTerms = TRUE,
+                          removeStopwords = TRUE)
 #didn't hang, but work just on small sets.                          
 BigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 2, max = 2))
-dtm <- DocumentTermMatrix(corps_DE[2], control =  list(tokenize = BigramTokenizer))
+dtm <- DocumentTermMatrix(corps_DE, control =  list(tokenize = BigramTokenizer))
 
