@@ -4,7 +4,7 @@
 ## Definitions
 
 dataPath <- "./data"
-shortFiles <- "./data/short/"
+shortFiles <- "./data/short"
 sampleSize <- 100000
 
 coreDataFile <- file.path(dataPath,"swiftkey.zip")
