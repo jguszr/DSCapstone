@@ -1,5 +1,6 @@
 require(tm)
-
+require(RTextTools)
+require(RWeka)
 #get the local file Reference
 source("./Prepare/prepareData.R")
 
@@ -32,4 +33,13 @@ dtm <- DocumentTermMatrix(corps_DE)
 findFreqTerms(dtm, 5)
 #find associated terms.
 findAssocs(dtm,"kultur", 0.8)
+
+dtmRtext <- create_matrix(corps_DE[[2]],language = "de",
+                          ngramLength = 2,
+                          originalMatrix = dtm,
+                          removeNumbers = TRUE,
+                          removePunctuation = TRUE)
+#didn't hang, but work just on small sets.                          
+BigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 2, max = 2))
+dtm <- DocumentTermMatrix(corps_DE[2], control =  list(tokenize = BigramTokenizer))
 
