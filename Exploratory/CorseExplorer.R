@@ -1,6 +1,7 @@
 require(tm)
 require(RTextTools)
 require(RWeka)
+require(SnowballC)
 #get the local file Reference
 source("./Prepare/prepareData.R")
 
@@ -22,11 +23,13 @@ meta(corps_DE[2], "language")
 
 #Transformations
 corps_DE <- tm_map(corps_DE,content_transformer(tolower))
-
-#removing stop words
 corps_DE <- tm_map(corps_DE,removeWords,stopwords("de"))
+corps_DE <- tm_map(corps_DE,stripWhitespace)
+corps_DE <- tm_map(corps_DE,stemDocument)
+corps_DE <- tm_map(corps_DE,removeNumbers)
+corps_DE <- tm_map(corps_DE,removePunctuation)
 
-#creating a document term matrix
+#creating a document term matrix 
 dtm <- DocumentTermMatrix(corps_DE)
 
 #finding term frequencies 
@@ -34,14 +37,16 @@ findFreqTerms(dtm, 5)
 #find associated terms.
 findAssocs(dtm,"kultur", 0.8)
 
-#works but it is slow
+#works but it is slow - the document term matrix didin't work
+gc()
 dtmRtext <- create_matrix(corps_DE,language = "de",
-                          ngramLength = 3,
-                          removeNumbers = TRUE,
-                          removePunctuation = TRUE,
-                          removeSparseTerms = TRUE,
-                          removeStopwords = TRUE)
-#didn't hang, but work just on small sets.                          
+                          ngramLength = 3)
+findFreqTerms(dtmRtext,  highfreq = 999)
+findMostFreqTerms(x = dtmRtext)
+
+#work with the new sample size
 BigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 2, max = 2))
 dtm <- DocumentTermMatrix(corps_DE, control =  list(tokenize = BigramTokenizer))
+findFreqTerms(dtm,  highfreq = 9)
+findMostFreqTerms(x = dtm)
 
