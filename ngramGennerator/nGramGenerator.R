@@ -34,10 +34,10 @@ simpleProcess <- function(path,outPath) {
     message("cleanning done ! - Generating nGrams")
     gc()
     for(j in 1:3) {
-        message("Generating Ngran n=",  J)
+        message("Generating Ngran n=",  j)
         dtm <- DocumentTermMatrix(corpus, 
                               control =  list(tokenize = BigramTokenizer(corpus,mi = j,ma = j),
-                                              language=language[i]
+                                              language=languages[i]
                                           ))
         m<-inspect(dtm)
         DF <- as.data.frame(m, stringsAsFactors = FALSE)
