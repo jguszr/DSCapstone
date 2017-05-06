@@ -2,6 +2,7 @@ require(tm)
 require(RTextTools)
 require(RWeka)
 require(SnowballC)
+library(stylo)
 #get the local file Reference
 source("./Prepare/prepareData.R")
 
