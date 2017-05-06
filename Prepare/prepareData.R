@@ -33,14 +33,17 @@ getallData <- function(dp,cdf,srcUrl) {
 prepareLocalPath <- function() {
   message("prepareLocalPath()",dataPath)  
   
-  if(!file.exists(dataPath)) {
-    dir.create(dataPath)
+  if(!file.exists(paste0(dataPath,.Platform$file.sep,"ngrams"))) {
+    dir.create(paste0(dataPath,.Platform$file.sep,"ngrams"))
   }
   
   if(!file.exists(shortFiles)) {
     dir.create(shortFiles)
   }
   
+  if(!file.exists(dataPath)) {
+    dir.create(dataPath)
+  }
   
   
 }
@@ -53,8 +56,8 @@ buildShortTextFiles <- function() {
   message("buildShortTextFiles")
   for(f in getSourceFiles()) {
     print(f)
-    content <- readLines(con=paste0(dataPath,.Platform$file.sep, f),n = sampleSize, skipNul = TRUE)
-    writeLines(text = content,
+    content <- readLines(con=paste0(dataPath,.Platform$file.sep, f), skipNul = TRUE)
+    writeLines(text = sample(content,NROW(content)*0.1),
                con = paste0(shortFiles,.Platform$file.sep,basename(f)[1]))
   }
 }
