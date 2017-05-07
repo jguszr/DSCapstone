@@ -11,7 +11,17 @@ require(SnowballC)
 language_id <- c("de_DE","en_US","fi_FI","ru_RU")
 languages <-  c("German","English","Finnish","Russian")
 
-BigramTokenizer <- function(x,mi=1,ma=1) NGramTokenizer(x, Weka_control(min = mi, max = ma))
+UnigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 1, max = 1))
+BigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 2, max = 2))
+TrigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 3, max = 3))
+
+writeToFile <- function(dtm, outPath,id,c) {
+  message("writeToFile ",outPath,id,c)
+  message("language_id[i]", language_id[c])
+  write.table(x = as.data.frame(m<-inspect(dtm), stringsAsFactors = FALSE),
+              file = paste0(outPath,id,i,language_id[c],".csv"),
+              fileEncoding = "UTF-8") 
+}
 
 simpleProcess <- function(path,outPath) {
   
@@ -31,24 +41,41 @@ simpleProcess <- function(path,outPath) {
     corpus <- tm_map(corpus,removeNumbers)
     corpus <- tm_map(corpus,removePunctuation)
     
-    message("cleanning done ! - Generating nGrams")
-    gc()
-    for(j in 1:3) {
-        message("Generating Ngran n=",  j)
-        dtm <- DocumentTermMatrix(corpus, 
-                              control =  list(tokenize = BigramTokenizer(corpus,mi = j,ma = j),
-                                              language=languages[i]
-                                          ))
-        m<-inspect(dtm)
-        DF <- as.data.frame(m, stringsAsFactors = FALSE)
-        write.table(x = DF,
-                    file = paste0(outPath,j,language_id[i],".csv"),
-                    fileEncoding = "UTF-8") 
-    }
+    message("cleanning done ! - Generating BiGrams")
 
-    rm(corpus)
+    dtm <- DocumentTermMatrix(corpus, 
+                             control =  list(tokenize = BigramTokenizer,
+                                              language=languages[i]
+                            ))
+    write.table(x = as.data.frame(m<-inspect(dtm), stringsAsFactors = FALSE),
+                file = paste0(outPath,"bigram_",i,"_",language_id[i],".csv"),
+                fileEncoding = "UTF-8") 
+  
     
+    message(" Generating TriGrams")
+    
+    dtm <- DocumentTermMatrix(corpus, 
+                              control =  list(tokenize = TrigramTokenizer,
+                                              language=languages[i]
+                              ))
+    write.table(x = as.data.frame(m<-inspect(dtm), stringsAsFactors = FALSE),
+                file = paste0(outPath,"trigram_",i,"_",language_id[i],".csv"),
+                fileEncoding = "UTF-8") 
+    
+    
+    message("cleanning done ! - Generating UniGrams")
+    
+    dtm <- DocumentTermMatrix(corpus, 
+                              control =  list(tokenize = UnigramTokenizer,
+                                              language=languages[i]
+                              ))
+    write.table(x = as.data.frame(m<-inspect(dtm), stringsAsFactors = FALSE),
+                file = paste0(outPath,"unigram_",i,"_",language_id[i],".csv"),
+                fileEncoding = "UTF-8") 
+    
+
   }
 }
 
-simpleProcess(paste0(dataPath,.Platform$file.sep,"short"),paste0(dataPath,.Platform$file.sep,"short"))
+
+simpleProcess(paste0(dataPath,.Platform$file.sep,"short"),paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep))

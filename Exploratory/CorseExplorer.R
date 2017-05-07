@@ -57,6 +57,6 @@ dtm <- DocumentTermMatrix(corps_DE,
                           )
 
 removeSparseTerms(dtm, 0.4)
-findFreqTerms(dtm,  highfreq = 999)
+findFreqTerms(dtm,  highfreq = 65)
 freqBigrans <- findMostFreqTerms(x = dtm)
 
