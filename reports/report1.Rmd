@@ -44,16 +44,110 @@ This two steeps will get the __.cvs__ files containg Ngram frequencies.
 
 ## And now some initial analisys
 
-```{r cars}
-summary(cars)
+### loading the Libraries 
+```{r}
+require(tm)
+require(RWeka)
+
 ```
 
-## Including Plots
+Using a VCorpus tm object to load all files in german. 
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r building Corpus, warning=FALSE}
+setwd("~/Documents/coursera/datasciencecoursera/DSCapstone")
+corpus <- VCorpus(DirSource("./data/short",pattern = "^de_DE",encoding = "UTF-8"),
+                   readerControl = list(reader= readPlain,language="de",load=TRUE))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+After it we can use the __inspect__ and the __meta__ tm functions to check data and metadata of a specific corpus property, or have a full view of it using the bellow code chunk. 
+```{r}
+inspect(corpus)
+```
+Also, we can check specific metada unsing the __meta__ for the entire corpus (in our case 3 documents) or we can bem more specific and specify wich document we want to extract the metadata 
+
+```{r}
+meta(corpus,"language")
+meta(corpus[2],"id")
+```
+
+So, after loading the corpus, its necessary to clean up it a bit in order to remove "noisy information" such as numbers, special characters, and so on... I will ommit the results of the next chunk to be a little more consice on this report.
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+corpus <- tm_map(corpus,content_transformer(tolower))
+corpus <- tm_map(corpus,removeWords,stopwords("de"))
+corpus <- tm_map(corpus,stripWhitespace)
+corpus <- tm_map(corpus,stemDocument)
+corpus <- tm_map(corpus,removeNumbers)
+corpus <- tm_map(corpus,removePunctuation)
+
+```
+
+I choose to generate a DocumentTermMatrix to first explore the corpus, since it, already calculate several aspect such as term frequency, sparsity among possible others. The matrix generation is quite resource demanding and take some time, that's why I had to short the raw data in shorter version. Otherwise Im unable to generate the data matrix.
+
+```{r}
+
+BigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 2, max = 2))
+
+termMatrix <- TermDocumentMatrix(corpus, 
+                          control =  list(tokenize = BigramTokenizer,
+                                          language="german",
+                                          removeNumbers=TRUE,
+                                          stemming=TRUE,
+                                          stopwords=TRUE
+                                          )
+                          )
+
+
+
+```
+
+
+## Visualizations
+
+So, while learning about NLP and TM, I find a visualization practice named **"wordclod"** which is somewhat a interesting visualiztion to approach a new text-based dataset.
+
+```{r }
+require(wordcloud)
+
+mtrx <- as.matrix(termMatrix)
+freq <- sort (rowSums (mtrx))
+tmdata <- data.frame (words=names(freq), freq)
+
+```
+
+
+```{r}
+wordcloud (tmdata$words, tmdata$freq, random.order=FALSE, colors=brewer.pal(8, "Dark2"))
+
+```
+
+
+And also some text clustering , and bigram frequency histogram.
+```{r}
+f <- matrix (0, ncol=nrow(mtrx), nrow=nrow(mtrx)) 
+colnames (f) <- rownames(mtrx)
+rownames (f) <- rownames(mtrx)
+
+for (i in rownames (Matrix)) {
+
+  ff <- findAssocs (Matrix,i,0)
+
+  for  (j in rownames (ff)) {
+
+    f[j,i]=ff[j,]
+
+  }
+
+}
+
+fd <- as.dist(f)
+
+```
+
+
+```{r}
+plot(hclust(fd, method="ward")) 
+
+```
+
+
