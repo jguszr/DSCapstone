@@ -12,9 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Milestone Report 
 ### Introduction and Objectives
 
-The main goal of this report is to demonstrate the the capacity developed to handle unstructred data in order to produce a structured set of records which can then be used for the purposes of statistical modeling in the relms of Text Mining. 
+The main goal of this report is to demonstrate the the capacity developed to handle unstructred data in order to produce a structured set of records which can  be used for the purposes of statistical modeling in the relms of Text Mining. 
 
-Due the size of the provided raw files I took the approach to structure different scripts to handle specific steps of the entire process. for more detais, please refer to my gitrepo wich contains the whole project. [getrepo](https://github.com/jguszr/DSCapstone)
+Due the size of the provided raw files I took the approach to structure different scripts to handle specific steps of the entire process. for more detais, please refer to my [gitrepo](https://github.com/jguszr/DSCapstone) wich contains the whole project. 
 
 I also tried to use as much as possible of the  [TM R](https://cran.r-project.org/web/packages/tm/index.html)  package among with its plugins for multicore processing (which, at this time I still developing).
 
@@ -106,24 +106,24 @@ termMatrix <- TermDocumentMatrix(corpus,
 
 So, while learning about NLP and TM, I find a visualization practice named **"wordclod"** which is somewhat a interesting visualiztion to approach a new text-based dataset.
 
-```{r, message=FALSE, warning=FALSE, include=FALSE}
+```{r, message=FALSE, warning=FALSE}
 require(wordcloud)
 
 mtrx <- as.matrix(termMatrix)
 freq <- sort (rowSums (mtrx))
 tmdata <- data.frame (words=names(freq), freq)
-
+summary(tmdata)
 ```
 
 
 ```{r, message=FALSE, warning=FALSE}
-wordcloud (tail(tmdata$words,500), tail(tmdata$freq,500), random.order=FALSE, colors=brewer.pal(8, "Dark2"))
+wordcloud (tail(tmdata$words,200), tail(tmdata$freq,200), random.order=FALSE, colors=brewer.pal(8, "Spectral"))
 
 ```
 
 
 And also bigram frenquency distribution, as a barplot, to help on understanding the data pattern. I had to **rm** some object in order to have enough memory to process the barplot.
-```{r, message=FALSE, warning=FALSE, include=FALSE}
+```{r}
 
 require(ggplot2)
 
@@ -139,6 +139,9 @@ ggplot(data=head(tmdata[order(tmdata$freq,decreasing = TRUE),],20), aes(x=words,
 
 ```
 
+##Conclusion
 
+* Even working with a small (10%) sample of the full dataset, the computing time is more than my current system can handle.
 
+* I should worry, not with the most frequent terms, but with them on the middle, even on this tiny top 20 sample, it is quite "visible" that bigrans with frequencies around 300 would be more challenging to handle than those above 600 
 
