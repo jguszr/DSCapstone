@@ -82,7 +82,7 @@ corpus <- tm_map(corpus,removePunctuation)
 
 ```
 
-I choose to generate a DocumentTermMatrix to first explore the corpus, since it, already calculate several aspect such as term frequency, sparsity among possible others. The matrix generation is quite resource demanding and take some time, that's why I had to short the raw data in shorter version. Otherwise Im unable to generate the data matrix.
+I choose to generate a TermDocumentMatrix to first explore the corpus, since it, already calculate several aspect such as term frequency, sparsity among possible others. The matrix generation is quite resource demanding and take some time, that's why I had to short the raw data in shorter version. Otherwise Im unable to generate the data matrix.
 
 ```{r}
 
@@ -112,7 +112,7 @@ require(wordcloud)
 mtrx <- as.matrix(termMatrix)
 freq <- sort (rowSums (mtrx))
 tmdata <- data.frame (words=names(freq), freq)
-summary(tmdata)
+
 ```
 
 
@@ -139,9 +139,12 @@ ggplot(data=head(tmdata[order(tmdata$freq,decreasing = TRUE),],20), aes(x=words,
 
 ```
 
+
+
 ##Conclusion
 
 * Even working with a small (10%) sample of the full dataset, the computing time is more than my current system can handle.
 
 * I should worry, not with the most frequent terms, but with them on the middle, even on this tiny top 20 sample, it is quite "visible" that bigrans with frequencies around 300 would be more challenging to handle than those above 600 
+
 
