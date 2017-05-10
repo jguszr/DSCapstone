@@ -45,7 +45,7 @@ This two steeps will get the __.cvs__ files containg Ngram frequencies.
 ## And now some initial analisys
 
 ### loading the Libraries 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 require(tm)
 require(RWeka)
 
@@ -106,7 +106,7 @@ termMatrix <- TermDocumentMatrix(corpus,
 
 So, while learning about NLP and TM, I find a visualization practice named **"wordclod"** which is somewhat a interesting visualiztion to approach a new text-based dataset.
 
-```{r }
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 require(wordcloud)
 
 mtrx <- as.matrix(termMatrix)
@@ -116,38 +116,27 @@ tmdata <- data.frame (words=names(freq), freq)
 ```
 
 
-```{r}
-wordcloud (tmdata$words, tmdata$freq, random.order=FALSE, colors=brewer.pal(8, "Dark2"))
+```{r, message=FALSE, warning=FALSE}
+wordcloud (tail(tmdata$words,500), tail(tmdata$freq,500), random.order=FALSE, colors=brewer.pal(8, "Dark2"))
 
 ```
 
 
-And also some text clustering , and bigram frequency histogram.
-```{r}
-f <- matrix (0, ncol=nrow(mtrx), nrow=nrow(mtrx)) 
-colnames (f) <- rownames(mtrx)
-rownames (f) <- rownames(mtrx)
+And also bigram frenquency distribution, as a barplot, to help on understanding the data pattern. I had to **rm** some object in order to have enough memory to process the barplot.
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 
-for (i in rownames (Matrix)) {
+require(ggplot2)
 
-  ff <- findAssocs (Matrix,i,0)
+rm(mtrx)
+rm(corpus)
+gc()
+tmdata <- subset(tmdata,tmdata$freq>150)
 
-  for  (j in rownames (ff)) {
-
-    f[j,i]=ff[j,]
-
-  }
-
-}
-
-fd <- as.dist(f)
+ggplot(data=head(tmdata[order(tmdata$freq,decreasing = TRUE),],20), aes(x=words, y=freq)) +
+  geom_bar(stat="identity")+theme_bw()
 
 ```
 
 
-```{r}
-plot(hclust(fd, method="ward")) 
-
-```
 
 
