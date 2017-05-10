@@ -133,7 +133,9 @@ gc()
 tmdata <- subset(tmdata,tmdata$freq>150)
 
 ggplot(data=head(tmdata[order(tmdata$freq,decreasing = TRUE),],20), aes(x=words, y=freq)) +
-  geom_bar(stat="identity")+theme_bw()
+  geom_bar(stat="identity", fill="steelblue")+ 
+  geom_text(aes(label=words), vjust=-0.3, size=1.9,color="blue")+ ggtitle("Top 20 most frequent  \n bigrams") + 
+  theme_minimal()
 
 ```
 
