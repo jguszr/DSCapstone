@@ -31,7 +31,7 @@ corps_DE <- tm_map(corps_DE,removeNumbers)
 corps_DE <- tm_map(corps_DE,removePunctuation)
 
 #creating a document term matrix 
-dtm <- DocumentTermMatrix(corps_DE)
+dtm <- TermDocumentMatrix(corps_DE)
 
 #finding term frequencies 
 findFreqTerms(dtm, 5)
@@ -47,16 +47,13 @@ findMostFreqTerms(x = dtmRtext)
 
 #work with the new sample size
 BigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 2, max = 2))
-dtm <- DocumentTermMatrix(corps_DE, 
+dtm <- TermDocumentMatrix(corps_DE, 
                           control =  list(tokenize = BigramTokenizer,
-                                          language="german",
-                                          removeNumbers=TRUE,
-                                          stemming=TRUE,
-                                          stopwords=TRUE
-                                          )
-                          )
+                                          language="german"))
 
-removeSparseTerms(dtm, 0.4)
+removeSparseTerms(dtm, 0.5)
+dt <- as.data.frame(apply(dtm, 1, sum))
+
 findFreqTerms(dtm,  highfreq = 65)
 freqBigrans <- findMostFreqTerms(x = dtm)
 

@@ -23,6 +23,15 @@ writeToFile <- function(dtm, outPath,id,c) {
               fileEncoding = "UTF-8") 
 }
 
+cleanDataFrame<-function(dt){
+  dt <- as.data.frame(cbind(rownames(dt), dt[, 1]))
+  colnames(dt) <- c('ngrams', 'Freq')
+  dt <- dt[order(dt$Frequency, decreasing = TRUE), ]
+  print(head(dt))
+  return(dt)
+}
+
+
 simpleProcess <- function(path,outPath) {
   
   message("simpleProcess", path)
@@ -43,33 +52,42 @@ simpleProcess <- function(path,outPath) {
     
     message("cleanning done ! - Generating BiGrams")
 
-    dtm <- DocumentTermMatrix(corpus, 
+    dtm <- TermDocumentMatrix(corpus, 
                              control =  list(tokenize = BigramTokenizer,
                                               language=languages[i]
                             ))
-    write.table(x = as.data.frame(m<-inspect(dtm), stringsAsFactors = FALSE),
+    
+    removeSparseTerms(dtm, 0.5)
+    
+    write.table(x = cleanDataFrame( as.data.frame(apply(dtm,1,sum))),
                 file = paste0(outPath,"bigram_",i,"_",language_id[i],".csv"),
                 fileEncoding = "UTF-8") 
   
     
     message(" Generating TriGrams")
     
-    dtm <- DocumentTermMatrix(corpus, 
+    dtm <- TermDocumentMatrix(corpus, 
                               control =  list(tokenize = TrigramTokenizer,
                                               language=languages[i]
                               ))
-    write.table(x = as.data.frame(m<-inspect(dtm), stringsAsFactors = FALSE),
+    
+    removeSparseTerms(dtm, 0.5)
+    
+    
+    write.table(x = cleanDataFrame( as.data.frame(apply(dtm,1,sum))),
                 file = paste0(outPath,"trigram_",i,"_",language_id[i],".csv"),
                 fileEncoding = "UTF-8") 
     
     
     message("cleanning done ! - Generating UniGrams")
     
-    dtm <- DocumentTermMatrix(corpus, 
+    dtm <- TermDocumentMatrix(corpus, 
                               control =  list(tokenize = UnigramTokenizer,
                                               language=languages[i]
                               ))
-    write.table(x = as.data.frame(m<-inspect(dtm), stringsAsFactors = FALSE),
+    
+    removeSparseTerms(dtm, 0.5)
+    write.table(x = cleanDataFrame( as.data.frame(apply(dtm,1,sum))),
                 file = paste0(outPath,"unigram_",i,"_",language_id[i],".csv"),
                 fileEncoding = "UTF-8") 
     
