@@ -91,10 +91,11 @@ simpleProcess <- function(path,outPath) {
     write.table(x = cleanDataFrame( as.data.frame(apply(dtm,1,sum))),
                 file = paste0(outPath,"unigram_",i,"_",language_id[i],".csv"),
                 fileEncoding = "UTF-8") 
-    
+  
 
   }
 }
 
 
 simpleProcess(paste0(dataPath,.Platform$file.sep,"short"),paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep))
+##tables must be loaded with read.table not with read.cvs !!!
