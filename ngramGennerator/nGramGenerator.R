@@ -26,7 +26,7 @@ writeToFile <- function(dtm, outPath,id,c) {
 cleanDataFrame<-function(dt){
   dt <- as.data.frame(cbind(rownames(dt), dt[, 1]))
   colnames(dt) <- c('ngrams', 'Freq')
-  dt <- dt[order(dt$Frequency, decreasing = TRUE), ]
+  dt <- dt[order(dt$Freq, decreasing = TRUE), ]
   print(head(dt))
   return(dt)
 }
@@ -58,8 +58,9 @@ simpleProcess <- function(path,outPath) {
                             ))
     
     removeSparseTerms(dtm, 0.5)
-    
-    write.table(x = cleanDataFrame( as.data.frame(apply(dtm,1,sum))),
+    dt <- as.data.frame(apply(dtm,1,sum))
+    dt<- cleanDataFrame(dt)
+    write.table(x =dt ,
                 file = paste0(outPath,"bigram_",i,"_",language_id[i],".csv"),
                 fileEncoding = "UTF-8") 
   
