@@ -16,13 +16,16 @@ The Project concept is based on the needs of the SwiftKey company related to "pr
 Approach
 ========================================================
 
-```{r}
-summary(cars)
-```
 
-Slide With Plot
+I approach this project from a streamline point of view, in which I separete different objectives in diferent files. So at this point the project contains 4 folder structures as follows
+
+* **data** : Contains a individual folder for each step of the process, from raw file to Ngram Files
+* **Prepare** : Contains the R Scripts to download and setup the local systems *data* structure
+* **Exploratory** : Contains the R Scripts That I used to learn the TM package among some preliminary studies regarding the data it self. check the file 
+* **ngramGennerator** : Contains the R Scripts used to process the short files  into TermDocumentMatrix into three new CVS files containing the frequency of the most comon Ngram in question.
+
+
+The NextWorld Algorithm
 ========================================================
+bla bla bla 
 
-```{r, echo=FALSE}
-plot(cars)
-```

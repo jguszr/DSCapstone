@@ -17,21 +17,15 @@ Approach
 ========================================================
 
 
-```r
-summary(cars)
-```
+I approach this project from a streamline point of view, in which I separete different objectives in diferent files. So at this point the project contains 4 folder structures as follows
 
-```
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-```
+* **data** : Contains a individual folder for each step of the process, from raw file to Ngram Files
+* **Prepare** : Contains the R Scripts to download and setup the local systems *data* structure
+* **Exploratory** : Contains the R Scripts That I used to learn the TM package among some preliminary studies regarding the data it self. check the file 
+* **ngramGennerator** : Contains the R Scripts used to process the short files  into TermDocumentMatrix into three new CVS files containing the frequency of the most comon Ngram in question.
 
-Slide With Plot
+
+The NextWorld Algorithm
 ========================================================
+bla bla bla 
 
-![plot of chunk unnamed-chunk-2](capstonepress-figure/unnamed-chunk-2-1.png)
