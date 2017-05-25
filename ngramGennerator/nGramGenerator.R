@@ -57,7 +57,10 @@ simpleProcess <- function(path,outPath) {
                                               language=languages[i]
                             ))
     
-    removeSparseTerms(dtm, 0.5)
+    dtm<-removeSparseTerms(dtm, 0.5)
+    
+    save(dtm,file = paste0(outPath,"Dtm_bigram_",i,"_",language_id[i],".RData"))
+    
     dt <- as.data.frame(apply(dtm,1,sum))
     dt<- cleanDataFrame(dt)
     write.table(x =dt ,
@@ -72,7 +75,9 @@ simpleProcess <- function(path,outPath) {
                                               language=languages[i]
                               ))
     
-    removeSparseTerms(dtm, 0.5)
+    dtm<- removeSparseTerms(dtm, 0.5)
+    
+    save(dtm,file = paste0(outPath,"Dtm_triigram_",i,"_",language_id[i],".RData"))
     
     
     write.table(x = cleanDataFrame( as.data.frame(apply(dtm,1,sum))),
@@ -87,7 +92,10 @@ simpleProcess <- function(path,outPath) {
                                               language=languages[i]
                               ))
     
-    removeSparseTerms(dtm, 0.5)
+    dtm <- removeSparseTerms(dtm, 0.5)
+    
+    save(dtm,file = paste0(outPath,"Dtm_unigram_",i,"_",language_id[i],".RData"))
+    
     write.table(x = cleanDataFrame( as.data.frame(apply(dtm,1,sum))),
                 file = paste0(outPath,"unigram_",i,"_",language_id[i],".csv"),
                 fileEncoding = "UTF-8") 
