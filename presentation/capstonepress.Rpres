@@ -1,0 +1,28 @@
+NextWord - Data Science Captstone Project
+========================================================
+author: Jose Gustavo Z. Rosa
+date: May/2017
+autosize: true
+
+The Project
+========================================================
+The Project concept is based on the needs of the SwiftKey company related to "predict" the next word in a text, To do so, a textual dataset were provided in 3 different languages (English, Deusth, Russian and Finland). The key aspect is to use Text Mining and some NLP techniques to build a *dataset* good enough for :  
+
+- Bring some understanding about the general aspect  
+- language independant Text Clean-up
+- Dataset build
+- Identify a good relationship between the dataset size versus the algorithm performance.
+
+Approach
+========================================================
+
+```{r}
+summary(cars)
+```
+
+Slide With Plot
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
