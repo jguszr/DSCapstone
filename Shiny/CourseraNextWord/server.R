@@ -10,6 +10,16 @@
 library(shiny)
 library(tm)
 
+load(file = "Dtm_unigram_2_en_US.RData")
+tdm_unigram <- dtm
+rm(dtm)
+load(file = "Dtm_bigram_2_en_US.RData")
+tdm_bigram <- dtm
+rm(dtm)
+load(file = "Dtm_triigram_2_en_US.RData")
+tdm_trigram <-dtm
+rm(dtm)
+
 
 katz_model <- function(phrase) {
   
@@ -140,7 +150,7 @@ katz_model <- function(phrase) {
       } else return("will")
       
     }
-    
+    print("Bang !")
     # preprocess phrase
     corpus_input <-
       VCorpus(
@@ -194,20 +204,13 @@ preprocess_corpus <- function(corpus) {
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
-  output$phrase <-
-    renderText(
-      {
-        if (input$predictButton == 0) "waiting for input ..."
-        else input$toBeCompleted
-      }
+  observeEvent(input$go, {
+    output$word <- renderText(
+       
+      katz_model(input$toBeCompleted)
     )
-  
-  output$word <-
-    renderText(
-      {
-        if (input$predictButton == 0) "waiting for input ..."
-        else katz_model(input$toBeCompleted)
-      }
+  }
+
   )
   
 })

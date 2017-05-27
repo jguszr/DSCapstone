@@ -18,7 +18,8 @@ shinyUI(fluidPage(
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
-      textInput("toBeCompleted", "Your Phrase", " ")
+      textInput("toBeCompleted", "Your Phrase", " "),
+      actionButton("go",label = "fetch !")
     ),
     
     # Show a plot of the generated distribution
