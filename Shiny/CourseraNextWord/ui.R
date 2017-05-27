@@ -1,10 +1,4 @@
 #
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
 #
 
 library(shiny)
@@ -13,21 +7,23 @@ library(shiny)
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Coursera Capstone Next Word Project"),
+  titlePanel(h1("Coursera Capstone Next Word Project",align = "center")),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
       textInput("toBeCompleted", "Your Phrase", " "),
       actionButton("go",label = "fetch !")
+      
+      
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
       strong("Text input predicted:"),
-      textOutput("phrase"),
+      p(textOutput("phrase")),
       strong("Prediction:"),
-      textOutput("word")
+      p(span(textOutput("word"),style="color:blue"))
     )
   )
 ))

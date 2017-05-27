@@ -10,7 +10,7 @@
 library(shiny)
 library(tm)
 
-
+repKatz <- repeatable(katz_model)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -18,7 +18,7 @@ shinyServer(function(input, output) {
   observeEvent(input$go, {
     output$word <- renderText(
        
-      katz_model(input$toBeCompleted)
+      repKatz(input$toBeCompleted)
     )
     output$phrase <- renderText(
       input$toBeCompleted
