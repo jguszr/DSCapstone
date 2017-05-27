@@ -13,7 +13,7 @@ create_ngram <- function(corpus, n) {
 }
 
 
-katz_backoff_model <- function(phrase) {
+katz_model <- function(phrase) {
   
   if (typeof(phrase) == "character") {
     
