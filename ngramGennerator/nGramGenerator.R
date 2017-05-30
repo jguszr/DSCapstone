@@ -57,7 +57,7 @@ simpleProcess <- function(path,outPath) {
                                               language=languages[i]
                             ))
     
-    dtm<-removeSparseTerms(dtm, 0.5)
+    dtm<-removeSparseTerms(dtm, 0.38)
     
     save(dtm,file = paste0(outPath,"Dtm_bigram_",i,"_",language_id[i],".RData"))
     
@@ -75,7 +75,7 @@ simpleProcess <- function(path,outPath) {
                                               language=languages[i]
                               ))
     
-    dtm<- removeSparseTerms(dtm, 0.5)
+    dtm<- removeSparseTerms(dtm, 0.38)
     
     save(dtm,file = paste0(outPath,"Dtm_triigram_",i,"_",language_id[i],".RData"))
     
@@ -92,7 +92,7 @@ simpleProcess <- function(path,outPath) {
                                               language=languages[i]
                               ))
     
-    dtm <- removeSparseTerms(dtm, 0.5)
+    dtm <- removeSparseTerms(dtm, 0.38)
     
     save(dtm,file = paste0(outPath,"Dtm_unigram_",i,"_",language_id[i],".RData"))
     

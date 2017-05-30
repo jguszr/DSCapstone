@@ -1,14 +1,40 @@
-create_ngram <- function(corpus, n) {
+## Global.R
+
+load(file = "Dtm_unigram_2_en_US.RData")
+tdm_unigram <- dtm
+rm(dtm)
+load(file = "Dtm_bigram_2_en_US.RData")
+tdm_bigram <- dtm
+rm(dtm)
+load(file = "Dtm_triigram_2_en_US.RData")
+tdm_trigram <-dtm
+rm(dtm)
+
+
+preprocess_corpus <- function(corpus) {
   
-  if (n == 1) {
-    
-    TermDocumentMatrix(corpus)
-    
-  } else {
-    
-    tdm2(corpus, ngmin = n, ngmax = n)
-    
-  }
+  # Remove punctuation from text.
+  corpus_preprocessed <- tm_map(corpus, removePunctuation)
+  
+  # Remove numbers from text.
+  corpus_preprocessed <- tm_map(corpus_preprocessed, removeNumbers)
+  
+  # Convert text to lowercase.
+  corpus_preprocessed <-
+    tm_map(corpus_preprocessed, content_transformer(tolower))
+  
+  # Strip whitespace from text.
+  corpus_preprocessed <- tm_map(corpus_preprocessed, stripWhitespace)
+  
+  # Stem the text.
+  # corpus_preprocessed <- tm_map(corpus_preprocessed, stemDocument)
+  
+  # Remove stopwords.
+  corpus_preprocessed <-
+    tm_map(corpus_preprocessed, removeWords, stopwords("en"))
+  
+  # Return value.
+  return(corpus_preprocessed)
   
 }
 
@@ -142,7 +168,7 @@ katz_model <- function(phrase) {
       } else return("will")
       
     }
-    
+    print("Bang !")
     # preprocess phrase
     corpus_input <-
       VCorpus(
@@ -165,40 +191,5 @@ katz_model <- function(phrase) {
   }
   
 }
-preprocess_corpus <- function(corpus) {
-  
-  # Remove punctuation from text.
-  corpus_preprocessed <- tm_map(corpus, removePunctuation)
-  
-  # Remove numbers from text.
-  corpus_preprocessed <- tm_map(corpus_preprocessed, removeNumbers)
-  
-  # Convert text to lowercase.
-  corpus_preprocessed <-
-    tm_map(corpus_preprocessed, content_transformer(tolower))
-  
-  # Strip whitespace from text.
-  corpus_preprocessed <- tm_map(corpus_preprocessed, stripWhitespace)
-  
-  # Stem the text.
-  # corpus_preprocessed <- tm_map(corpus_preprocessed, stemDocument)
-  
-  # Remove stopwords.
-  corpus_preprocessed <-
-    tm_map(corpus_preprocessed, removeWords, stopwords("en"))
-  
-  # Return value.
-  return(corpus_preprocessed)
-  
-}
 
 
-load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"unigramMatrix2_en_US.RData"))
-tdm_unigram <- dtm
-rm(dtm)
-load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"biGramMatrix2_en_US.RData"))
-tdm_bigram <- dtm
-rm(dtm)
-load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"trigramMatrix2_en_US.RData"))
-tdm_trigram <-dtm
-rm(dtm)
