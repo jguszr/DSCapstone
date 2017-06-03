@@ -193,12 +193,12 @@ preprocess_corpus <- function(corpus) {
 }
 
 
-load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"unigramMatrix2_en_US.RData"))
+load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"Dtm_unigram_2_en_US.RData"))
 tdm_unigram <- dtm
 rm(dtm)
-load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"biGramMatrix2_en_US.RData"))
+load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"Dtm_bigram_2_en_US.RData"))
 tdm_bigram <- dtm
 rm(dtm)
-load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"trigramMatrix2_en_US.RData"))
+load(file = paste0(dataPath,.Platform$file.sep,"ngrams",.Platform$file.sep,"Dtm_triigram_2_en_US.RData"))
 tdm_trigram <-dtm
 rm(dtm)
