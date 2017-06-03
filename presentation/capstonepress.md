@@ -31,5 +31,12 @@ After investing some time researching more sofisticated algorithms and R package
 
 Due to size of data files  and performance, I had to reduce my data files in order to the Katz Model works a bit faster, to do so, I had to work reducing the text sparsity, specially for bigrans from 0.56 down to 0.28. 
 
-The shiny app ran OK with that amout of data, and I choose not to brush too much on the UI, and rather I invest more time on trying to refine a little more the ngram generation script using not only the TM package but also the Quanteda packaga which I think ran better than TM specially for Term matrix analisys and overall clean up operations.
 
+Conclusion
+========================================================
+
+The shiny app ran OK with that amout of data, and I choose not to brush up the UI, and rather I invest more time on trying to refine a little more the ngram generation script using not only the TM package but also the Quanteda package which I think ran better than TM specially for Term matrix analisys and overall clean up operations.
+
+And here is my App : [TheNextWord](https://jguszrds.shinyapps.io/CourseraNextWord/)
+
+***Please remember :*** Patience is virtue !
