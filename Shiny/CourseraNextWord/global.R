@@ -13,27 +13,13 @@ rm(dtm)
 
 preprocess_corpus <- function(corpus) {
   
-  # Remove punctuation from text.
   corpus_preprocessed <- tm_map(corpus, removePunctuation)
-  
-  # Remove numbers from text.
   corpus_preprocessed <- tm_map(corpus_preprocessed, removeNumbers)
-  
-  # Convert text to lowercase.
   corpus_preprocessed <-
     tm_map(corpus_preprocessed, content_transformer(tolower))
-  
-  # Strip whitespace from text.
   corpus_preprocessed <- tm_map(corpus_preprocessed, stripWhitespace)
-  
-  # Stem the text.
-  # corpus_preprocessed <- tm_map(corpus_preprocessed, stemDocument)
-  
-  # Remove stopwords.
   corpus_preprocessed <-
     tm_map(corpus_preprocessed, removeWords, stopwords("en"))
-  
-  # Return value.
   return(corpus_preprocessed)
   
 }
