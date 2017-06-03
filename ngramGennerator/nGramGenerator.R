@@ -57,7 +57,7 @@ simpleProcess <- function(path,outPath) {
                                               language=languages[i]
                             ))
     
-    dtm<-removeSparseTerms(dtm, 0.38)
+    dtm<-removeSparseTerms(dtm, 0.28)
     
     save(dtm,file = paste0(outPath,"Dtm_bigram_",i,"_",language_id[i],".RData"))
     
